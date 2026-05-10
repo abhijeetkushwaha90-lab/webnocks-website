@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Webnocks – IT Consulting & SEO Services</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#07080F;--bg2:#0D0E1A;--card:#111320;--accent:#00FFB2;--accent2:#4F8EF7;--green:#3DD68C;--text:#F0F2FF;--muted:#7A7F9A;--border:#1C1F35}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.6;overflow-x:hidden}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:var(--accent2);border-radius:10px}
+nav{display:flex;justify-content:space-between;align-items:center;padding:1rem 3rem;border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(7,8,15,0.96);backdrop-filter:blur(20px);z-index:1000}
+.logo-wrap{display:flex;align-items:center;gap:10px;cursor:pointer}
+.logo-text{font-family:'Syne',sans-serif;font-weight:800;font-size:1.25rem;color:var(--text)}
+.logo-text span{color:var(--green)}
+.nav-links{display:flex;gap:2rem;list-style:none;align-items:center}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:0.88rem;transition:color .2s;cursor:pointer}
+.nav-links a:hover,.nav-links a.active{color:var(--accent)}
+.nav-cta{background:linear-gradient(135deg,var(--accent2),#2563eb);color:#fff;padding:0.5rem 1.3rem;border-radius:8px;font-weight:500;font-size:0.85rem;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;transition:opacity .2s}
+.nav-cta:hover{opacity:0.85}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
+.hamburger span{width:24px;height:2px;background:var(--text);border-radius:2px}
+.page{display:none;animation:fadeIn .35s ease}
+.page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.hero{padding:6rem 3rem 4rem;max-width:1100px;margin:0 auto}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(79,142,247,0.1);border:1px solid rgba(79,142,247,0.25);border-radius:20px;padding:0.4rem 1rem;font-size:0.78rem;color:var(--accent2);margin-bottom:2rem}
+.pulse{width:7px;height:7px;background:var(--accent);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+h1{font-family:'Syne',sans-serif;font-size:3.6rem;font-weight:800;line-height:1.08;letter-spacing:-2px;margin-bottom:1.5rem;max-width:780px}
+.green{color:var(--accent)}.blue{color:var(--accent2)}
+.hero-sub{font-size:1.05rem;color:var(--muted);max-width:500px;margin-bottom:2.5rem;font-weight:300}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:4rem}
+.btn-primary{background:linear-gradient(135deg,var(--accent2),#1d4ed8);color:#fff;padding:0.85rem 2rem;border-radius:8px;font-weight:500;font-size:0.92rem;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;transition:transform .2s,opacity .2s}
+.btn-primary:hover{transform:translateY(-2px);opacity:.9}
+.btn-outline{border:1px solid var(--border);color:var(--text);padding:0.85rem 2rem;border-radius:8px;font-size:0.92rem;background:transparent;cursor:pointer;font-family:'DM Sans',sans-serif;transition:border-color .2s}
+.btn-outline:hover{border-color:var(--accent2)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;border-top:1px solid var(--border);padding-top:3rem}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;text-align:center}
+.stat-card .num{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--accent);display:block}
+.stat-card p{color:var(--muted);font-size:0.82rem;margin-top:.3rem}
+section{padding:5rem 3rem;max-width:1100px;margin:0 auto}
+.sec-tag{font-size:0.72rem;text-transform:uppercase;letter-spacing:3px;color:var(--accent2);margin-bottom:.8rem}
+h2{font-family:'Syne',sans-serif;font-size:2.2rem;font-weight:700;letter-spacing:-1px;margin-bottom:.8rem}
+.sec-sub{color:var(--muted);font-size:.95rem;margin-bottom:3rem;max-width:520px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+.svc-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.8rem;transition:all .3s;cursor:pointer;position:relative;overflow:hidden}
+.svc-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent2),var(--accent));opacity:0;transition:opacity .3s}
+.svc-card:hover{border-color:var(--accent2);transform:translateY(-3px)}.svc-card:hover::before{opacity:1}
+.svc-icon{font-size:2rem;margin-bottom:1rem;display:block}
+.svc-card h3{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:.5rem}
+.svc-card p{color:var(--muted);font-size:.83rem;line-height:1.6;margin-bottom:1rem}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{background:rgba(79,142,247,.1);color:var(--accent2);border:1px solid rgba(79,142,247,.2);border-radius:4px;font-size:.7rem;padding:3px 8px}
+.price-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:2rem;position:relative;transition:all .3s}
+.price-card.featured{border-color:var(--accent2);background:linear-gradient(135deg,rgba(79,142,247,.08),var(--card))}
+.price-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--accent2),#1d4ed8);color:#fff;font-size:.7rem;padding:4px 14px;border-radius:20px;white-space:nowrap}
+.price-name{font-family:'Syne',sans-serif;font-size:.85rem;font-weight:600;color:var(--muted);margin-bottom:.5rem}
+.price-amount{font-family:'Syne',sans-serif;font-size:2.2rem;font-weight:800;color:var(--accent);margin-bottom:.3rem}
+.price-amount span{font-size:.9rem;color:var(--muted);font-weight:400}
+.price-desc{color:var(--muted);font-size:.8rem;margin-bottom:1.5rem}
+.price-features{list-style:none;margin-bottom:1.5rem}
+.price-features li{font-size:.82rem;color:var(--muted);padding:.4rem 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.price-features li::before{content:'✓';color:var(--accent);font-size:.75rem;flex-shrink:0}
+.price-btn{width:100%;padding:.75rem;border-radius:8px;font-size:.85rem;font-weight:500;cursor:pointer;transition:all .2s;border:1px solid var(--accent2);background:transparent;color:var(--accent2);font-family:'DM Sans',sans-serif}
+.price-btn:hover,.price-card.featured .price-btn{background:var(--accent2);color:#fff}
+.founder-wrap{display:grid;grid-template-columns:1fr 1.4fr;gap:4rem;align-items:center}
+.founder-avatar{width:100%;max-width:300px;height:360px;background:linear-gradient(135deg,rgba(79,142,247,.12),rgba(0,255,178,.05));border:1px solid var(--border);border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:6rem;position:relative;overflow:hidden}
+.founder-badge{position:absolute;bottom:20px;left:16px;right:16px;background:rgba(13,14,26,.95);border:1px solid var(--border);border-radius:10px;padding:.8rem}
+.founder-badge h4{font-family:'Syne',sans-serif;font-size:.95rem;font-weight:700}
+.founder-badge p{color:var(--accent2);font-size:.78rem}
+.founder-info p{color:var(--muted);font-size:.9rem;line-height:1.8;margin-bottom:1.2rem}
+.contact-row{display:flex;align-items:center;gap:10px;font-size:.88rem;margin-bottom:.7rem}
+.contact-icon{width:34px;height:34px;background:rgba(79,142,247,.1);border:1px solid rgba(79,142,247,.2);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0}
+.contact-row a{color:var(--text);text-decoration:none}.contact-row a:hover{color:var(--accent2)}
+.skill-pill{background:rgba(0,255,178,.08);border:1px solid rgba(0,255,178,.2);color:var(--accent);border-radius:20px;font-size:.75rem;padding:4px 12px;display:inline-block;margin:4px}
+.booking-wrap{display:grid;grid-template-columns:1fr 1.2fr;gap:3rem;align-items:start}
+.bf-item{display:flex;align-items:flex-start;gap:12px;margin-bottom:1.2rem}
+.bf-icon{width:40px;height:40px;background:rgba(0,255,178,.1);border:1px solid rgba(0,255,178,.2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.bf-item h4{font-size:.9rem;font-weight:500;margin-bottom:.2rem}
+.bf-item p{color:var(--muted);font-size:.82rem}
+.booking-form{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:2rem}
+.form-title{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:700;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--border)}
+.form-group{margin-bottom:1.1rem}
+.form-group label{display:block;font-size:.78rem;color:var(--muted);margin-bottom:.4rem;text-transform:uppercase;letter-spacing:1px}
+.form-group input,.form-group select,.form-group textarea{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:.75rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.9rem;transition:border-color .2s;outline:none}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--accent2)}
+.form-group select option{background:var(--bg2)}
+.slots-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;max-height:160px;overflow-y:auto;padding-right:4px}
+.slot{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:5px 3px;text-align:center;font-size:.7rem;cursor:pointer;transition:all .2s;color:var(--muted)}
+.slot:hover,.slot.selected{background:rgba(79,142,247,.15);border-color:var(--accent2);color:var(--accent2)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.submit-btn{width:100%;padding:.9rem;background:linear-gradient(135deg,var(--accent2),#1d4ed8);border:none;border-radius:8px;color:#fff;font-size:.92rem;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity .2s;margin-top:.5rem}
+.submit-btn:hover{opacity:.85}
+.faq-item{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:.8rem}
+.faq-q{padding:1.2rem 1.5rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-size:.92rem;font-weight:500;transition:color .2s}
+.faq-q:hover{color:var(--accent2)}
+.faq-icon{font-size:1.2rem;color:var(--accent2);transition:transform .3s;flex-shrink:0}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.faq-a p{padding:0 1.5rem 1.2rem;color:var(--muted);font-size:.87rem;line-height:1.7}
+.faq-item.open .faq-icon{transform:rotate(45deg)}
+.faq-item.open .faq-a{max-height:200px}
+.testi-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.8rem}
+.stars{color:#F59E0B;font-size:.85rem;margin-bottom:1rem}
+.testi-card p{color:var(--muted);font-size:.85rem;line-height:1.7;margin-bottom:1.2rem;font-style:italic}
+.testi-author{display:flex;align-items:center;gap:10px}
+.avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--accent2),var(--accent));display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;color:#000;flex-shrink:0}
+.testi-author h5{font-size:.85rem;font-weight:500}
+.testi-author span{font-size:.75rem;color:var(--muted)}
+.audit-wrap{background:linear-gradient(135deg,rgba(79,142,247,.08),rgba(0,255,178,.04));border:1px solid rgba(79,142,247,.2);border-radius:20px;padding:3rem;text-align:center;max-width:600px;margin:0 auto}
+.audit-form{display:flex;flex-direction:column;gap:1rem;text-align:left}
+.audit-form input{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:.85rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.9rem;outline:none;transition:border-color .2s}
+.audit-form input:focus{border-color:var(--accent2)}
+.footer-wrap{border-top:1px solid var(--border);padding:4rem 3rem 2rem;max-width:1100px;margin:0 auto}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
+.footer-col h4{font-family:'Syne',sans-serif;font-size:.85rem;font-weight:700;margin-bottom:1rem}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.6rem}
+.footer-col ul li a{color:var(--muted);text-decoration:none;font-size:.83rem;cursor:pointer;transition:color .2s}
+.footer-col ul li a:hover{color:var(--accent2)}
+.footer-bottom{border-top:1px solid var(--border);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center}
+.footer-bottom p{color:var(--muted);font-size:.78rem}
+.wa-btn{position:fixed;bottom:24px;right:24px;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;z-index:9999;box-shadow:0 4px 20px rgba(37,211,102,.4);animation:waFloat 3s ease-in-out infinite}
+.wa-btn:hover{transform:scale(1.1)}
+@keyframes waFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.wa-btn svg{width:30px;height:30px;fill:#fff}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:9998;display:none;align-items:center;justify-content:center}
+.modal-overlay.show{display:flex}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:3rem;text-align:center;max-width:420px;width:90%}
+.modal-icon{font-size:4rem;margin-bottom:1rem}
+.modal h3{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:700;margin-bottom:.8rem}
+.modal p{color:var(--muted);font-size:.9rem;margin-bottom:2rem}
+.modal-close{background:var(--accent2);color:#fff;border:none;padding:.75rem 2rem;border-radius:8px;font-size:.9rem;cursor:pointer;font-family:'DM Sans',sans-serif}
+.mobile-menu{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bg);z-index:999;flex-direction:column;align-items:center;justify-content:center;gap:2.5rem}
+.mobile-menu.open{display:flex}
+.mobile-menu a{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:700;color:var(--text);text-decoration:none;cursor:pointer}
+.mobile-menu a:hover{color:var(--accent2)}
+.mobile-close{position:absolute;top:1.5rem;right:1.5rem;background:none;border:none;color:var(--text);font-size:1.5rem;cursor:pointer}
+.legal-page{max-width:780px;margin:0 auto;padding:4rem 3rem}
+.legal-page h1{font-family:'Syne',sans-serif;font-size:2.4rem;font-weight:800;margin-bottom:.5rem}
+.legal-page .date{color:var(--muted);font-size:.85rem;margin-bottom:3rem}
+.legal-page h3{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin:2rem 0 .8rem;color:var(--accent2)}
+.legal-page p,.legal-page ul{color:var(--muted);font-size:.9rem;line-height:1.8;margin-bottom:1rem}
+.legal-page ul{padding-left:1.5rem}
+.pricetitle{font-family:'Syne',sans-serif;font-size:1rem;color:var(--muted);margin-bottom:1.5rem;letter-spacing:1px;text-transform:uppercase;padding-top:1rem}
+@media(max-width:900px){
+  nav{padding:1rem 1.5rem}.nav-links{display:none}.hamburger{display:flex}
+  h1{font-size:2.4rem}.hero{padding:4rem 1.5rem 3rem}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  section{padding:3rem 1.5rem}
+  .grid3,.grid2,.pricing-grid-3{grid-template-columns:1fr}
+  .founder-wrap,.booking-wrap{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .footer-bottom{flex-direction:column;gap:1rem;text-align:center}
+  .form-row{grid-template-columns:1fr}
+  h2{font-size:1.8rem}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo-wrap" onclick="showPage('home')">
+    <span class="logo-text">webnocks<span>.work</span></span>
+  </div>
+  <ul class="nav-links">
+    <li><a onclick="showPage('home')" id="nav-home">Home</a></li>
+    <li><a onclick="showPage('services')" id="nav-services">Services</a></li>
+    <li><a onclick="showPage('pricing')" id="nav-pricing">Pricing</a></li>
+    <li><a onclick="showPage('about')" id="nav-about">About</a></li>
+    <li><a onclick="showPage('booking')" id="nav-booking">Book Call</a></li>
+    <li><a onclick="showPage('contact')" id="nav-contact">Contact</a></li>
+  </ul>
+  <button class="nav-cta" onclick="showPage('booking')">Free Consultation →</button>
+  <button class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="toggleMenu()">✕</button>
+  <a onclick="go('home')">Home</a>
+  <a onclick="go('services')">Services</a>
+  <a onclick="go('pricing')">Pricing</a>
+  <a onclick="go('about')">About</a>
+  <a onclick="go('booking')">Book a Call</a>
+  <a onclick="go('contact')">Contact</a>
+</div>
+
+<!-- HOME -->
+<div class="page active" id="page-home">
+  <div class="hero">
+    <div class="hero-badge"><span class="pulse"></span>India's Trusted IT & SEO Agency</div>
+    <h1>Rank Higher. <span class="green">Grow Faster.</span><br>Work <span class="blue">Smarter.</span></h1>
+    <p class="hero-sub">Webnocks delivers results-driven SEO, IT consulting, and web development for businesses ready to scale across India.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="showPage('booking')">Book Free Consultation →</button>
+      <button class="btn-outline" onclick="showPage('services')">Explore Services</button>
+    </div>
+    <div class="stats">
+      <div class="stat-card"><span class="num">150+</span><p>Projects Delivered</p></div>
+      <div class="stat-card"><span class="num">3x</span><p>Avg. Traffic Growth</p></div>
+      <div class="stat-card"><span class="num">2+</span><p>Years Experience</p></div>
+      <div class="stat-card"><span class="num">98%</span><p>Client Satisfaction</p></div>
+    </div>
+  </div>
+
+  <section>
+    <p class="sec-tag">What We Do</p>
+    <h2>Our Core Services</h2>
+    <p class="sec-sub">Everything your business needs to dominate online — under one roof.</p>
+    <div class="grid3">
+      <div class="svc-card" onclick="showPage('services')"><span class="svc-icon">📈</span><h3>SEO Services</h3><p>Rank on Google's first page. Drive organic traffic that converts into real customers.</p><div class="tags"><span class="tag">On-Page SEO</span><span class="tag">Link Building</span><span class="tag">Local SEO</span></div></div>
+      <div class="svc-card" onclick="showPage('services')"><span class="svc-icon">💻</span><h3>Web Development</h3><p>Fast, modern, mobile-friendly websites that look great and convert visitors to clients.</p><div class="tags"><span class="tag">Landing Pages</span><span class="tag">Business Sites</span><span class="tag">E-Commerce</span></div></div>
+      <div class="svc-card" onclick="showPage('services')"><span class="svc-icon">🧠</span><h3>IT Consulting</h3><p>Strategic tech advisory to modernize your business, reduce costs, and boost efficiency.</p><div class="tags"><span class="tag">Cloud Setup</span><span class="tag">IT Audit</span><span class="tag">Digital Strategy</span></div></div>
+      <div class="svc-card" onclick="showPage('services')"><span class="svc-icon">📊</span><h3>Google Ads / PPC</h3><p>Targeted ad campaigns that bring immediate traffic and measurable ROI for your business.</p><div class="tags"><span class="tag">Google Ads</span><span class="tag">Meta Ads</span><span class="tag">Remarketing</span></div></div>
+      <div class="svc-card" onclick="showPage('services')"><span class="svc-icon">📱</span><h3>Social Media Marketing</h3><p>Build your brand presence on Instagram, LinkedIn, and Facebook with strategic content.</p><div class="tags"><span class="tag">Content Strategy</span><span class="tag">Growth</span><span class="tag">Engagement</span></div></div>
+      <div class="svc-card" onclick="showPage('services')"><span class="svc-icon">🔒</span><h3>IT Support & Security</h3><p>Keep your business protected and running smoothly with ongoing IT support 24/7.</p><div class="tags"><span class="tag">Cybersecurity</span><span class="tag">Cloud</span><span class="tag">Remote Support</span></div></div>
+    </div>
+  </section>
+
+  <section>
+    <p class="sec-tag">Client Reviews</p>
+    <h2>What Our Clients Say</h2>
+    <p class="sec-sub">Real results from real businesses we've helped grow.</p>
+    <div class="grid3">
+      <div class="testi-card"><div class="stars">★★★★★</div><p>"Webnocks transformed our online presence completely. Website traffic tripled in just 3 months!"</p><div class="testi-author"><div class="avatar">RK</div><div><h5>Rajesh Kumar</h5><span>E-commerce Owner, Delhi</span></div></div></div>
+      <div class="testi-card"><div class="stars">★★★★★</div><p>"Abhijeet delivered our website in record time. Professional, responsive, and the SEO results are incredible."</p><div class="testi-author"><div class="avatar">PS</div><div><h5>Priya Sharma</h5><span>Startup Founder, Noida</span></div></div></div>
+      <div class="testi-card"><div class="stars">★★★★★</div><p>"Best IT consulting experience. Migrated to cloud and our operational costs dropped by 40%. Amazing!"</p><div class="testi-author"><div class="avatar">AM</div><div><h5>Anil Mehta</h5><span>Manufacturing Business, UP</span></div></div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="audit-wrap">
+      <p class="sec-tag" style="text-align:center">Free Offer</p>
+      <h2>Get Your Free SEO Audit</h2>
+      <p style="color:var(--muted);margin-bottom:2rem;font-size:.92rem">Enter your website URL and we'll send you a complete SEO analysis report — absolutely free.</p>
+      <div class="audit-form">
+        <input type="text" placeholder="Your Name" id="auditName"/>
+        <input type="url" placeholder="Your Website URL (e.g. yoursite.com)" id="auditUrl"/>
+        <input type="email" placeholder="Your Email Address" id="auditEmail"/>
+        <input type="tel" placeholder="WhatsApp Number" id="auditPhone"/>
+        <button class="btn-primary" onclick="submitAudit()">Get Free SEO Audit →</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- SERVICES -->
+<div class="page" id="page-services">
+  <section>
+    <p class="sec-tag">Our Services</p>
+    <h2>Complete Digital Solutions</h2>
+    <p class="sec-sub">From SEO to full IT transformation — everything your business needs to succeed online.</p>
+    <div class="grid3">
+      <div class="svc-card"><span class="svc-icon">📈</span><h3>SEO – Search Engine Optimization</h3><p>Rank on Google's first page through proven white-hat SEO strategies. More visibility = more customers.</p><div class="tags"><span class="tag">Keyword Research</span><span class="tag">On-Page SEO</span><span class="tag">Technical SEO</span><span class="tag">Link Building</span><span class="tag">Local SEO</span></div></div>
+      <div class="svc-card"><span class="svc-icon">💻</span><h3>Web Development</h3><p>Professional, fast, mobile-friendly websites built to convert. Landing pages to complex web applications.</p><div class="tags"><span class="tag">Landing Pages</span><span class="tag">Business Websites</span><span class="tag">E-Commerce</span><span class="tag">WordPress</span></div></div>
+      <div class="svc-card"><span class="svc-icon">🧠</span><h3>IT Consulting</h3><p>Strategic technology advisory to modernize, cut costs, and align tech with your business goals.</p><div class="tags"><span class="tag">IT Audit</span><span class="tag">Cloud Migration</span><span class="tag">Digital Strategy</span><span class="tag">Tech Roadmap</span></div></div>
+      <div class="svc-card"><span class="svc-icon">☁️</span><h3>Cloud Setup & Management</h3><p>Migrate your business to AWS, Google Cloud, or Azure. Setup, optimize, and manage cloud infrastructure.</p><div class="tags"><span class="tag">AWS</span><span class="tag">Google Cloud</span><span class="tag">Azure</span><span class="tag">G-Suite</span></div></div>
+      <div class="svc-card"><span class="svc-icon">📊</span><h3>Google Ads & PPC</h3><p>Run targeted Google and Meta ad campaigns that bring immediate, measurable results and positive ROI.</p><div class="tags"><span class="tag">Google Ads</span><span class="tag">Meta Ads</span><span class="tag">Remarketing</span><span class="tag">A/B Testing</span></div></div>
+      <div class="svc-card"><span class="svc-icon">📱</span><h3>Social Media Marketing</h3><p>Build a strong brand presence and engaged community on Instagram, LinkedIn, Facebook and more.</p><div class="tags"><span class="tag">Content Creation</span><span class="tag">Instagram Growth</span><span class="tag">LinkedIn</span></div></div>
+      <div class="svc-card"><span class="svc-icon">🔒</span><h3>Cybersecurity & IT Support</h3><p>Protect your business from cyber threats. Ongoing IT support to keep systems running smoothly 24/7.</p><div class="tags"><span class="tag">Security Audit</span><span class="tag">Firewall Setup</span><span class="tag">Remote Support</span></div></div>
+      <div class="svc-card"><span class="svc-icon">📧</span><h3>Email Marketing</h3><p>Design and execute email campaigns that nurture leads, retain customers, and drive repeat sales.</p><div class="tags"><span class="tag">Campaign Design</span><span class="tag">Automation</span><span class="tag">List Management</span></div></div>
+      <div class="svc-card"><span class="svc-icon">📉</span><h3>Analytics & Reporting</h3><p>Track every metric that matters. Monthly performance dashboards with actionable insights.</p><div class="tags"><span class="tag">Google Analytics</span><span class="tag">SEO Reports</span><span class="tag">KPI Tracking</span></div></div>
+    </div>
+    <div style="text-align:center;margin-top:3rem"><button class="btn-primary" onclick="showPage('booking')">Get Started — Free Consultation →</button></div>
+  </section>
+</div>
+
+<!-- PRICING -->
+<div class="page" id="page-pricing">
+  <section>
+    <p class="sec-tag">Transparent Pricing</p>
+    <h2>Simple, Honest Pricing</h2>
+    <p class="sec-sub">No hidden charges. Choose a plan that fits your business needs and budget.</p>
+
+    <p class="pricetitle">📈 SEO Packages</p>
+    <div class="grid3" style="margin-bottom:4rem">
+      <div class="price-card"><div class="price-name">Basic SEO</div><div class="price-amount">₹8,000<span>/month</span></div><div class="price-desc">Perfect for small businesses starting SEO</div><ul class="price-features"><li>20 Keywords Targeted</li><li>On-Page Optimization</li><li>Google My Business Setup</li><li>Monthly SEO Report</li><li>1 Blog Post/month</li></ul><button class="price-btn" onclick="showPage('booking')">Get Started</button></div>
+      <div class="price-card featured"><div class="price-badge">Most Popular</div><div class="price-name">Growth SEO</div><div class="price-amount">₹15,000<span>/month</span></div><div class="price-desc">For businesses serious about dominating search</div><ul class="price-features"><li>Everything in Basic</li><li>50 Keywords Targeted</li><li>Link Building (10 backlinks)</li><li>Competitor Analysis</li><li>4 Blog Posts/month</li><li>Weekly Progress Updates</li></ul><button class="price-btn" onclick="showPage('booking')">Get Started</button></div>
+      <div class="price-card"><div class="price-name">Premium SEO</div><div class="price-amount">₹25,000<span>/month</span></div><div class="price-desc">Full-scale SEO + ads for maximum dominance</div><ul class="price-features"><li>Everything in Growth</li><li>100+ Keywords</li><li>Google Ads Management</li><li>Technical SEO Audit</li><li>8 Blog Posts/month</li><li>Dedicated Account Manager</li><li>Weekly Call + Report</li></ul><button class="price-btn" onclick="showPage('booking')">Get Started</button></div>
+    </div>
+
+    <p class="pricetitle">💻 Web Development</p>
+    <div class="grid3" style="margin-bottom:4rem">
+      <div class="price-card"><div class="price-name">Landing Page</div><div class="price-amount">₹5,000<span> one-time</span></div><div class="price-desc">Single page for lead generation</div><ul class="price-features"><li>1 Page Design</li><li>Mobile Responsive</li><li>Contact Form</li><li>Basic SEO Setup</li><li>3 Day Delivery</li></ul><button class="price-btn" onclick="showPage('booking')">Get Started</button></div>
+      <div class="price-card featured"><div class="price-badge">Best Value</div><div class="price-name">Business Website</div><div class="price-amount">₹12,000<span> one-time</span></div><div class="price-desc">Complete multi-page professional website</div><ul class="price-features"><li>Up to 5 Pages</li><li>Custom Design</li><li>Mobile Responsive</li><li>Contact + Booking Form</li><li>SEO Optimized</li><li>7 Day Delivery</li></ul><button class="price-btn" onclick="showPage('booking')">Get Started</button></div>
+      <div class="price-card"><div class="price-name">Advanced Website</div><div class="price-amount">₹25,000<span> one-time</span></div><div class="price-desc">Custom web app with payment & admin panel</div><ul class="price-features"><li>Unlimited Pages</li><li>Payment Gateway</li><li>Admin Dashboard</li><li>Booking System</li><li>E-Commerce Ready</li><li>15 Day Delivery</li></ul><button class="price-btn" onclick="showPage('booking')">Get Started</button></div>
+    </div>
+
+    <p class="pricetitle">🧠 IT Consulting</p>
+    <div class="grid3">
+      <div class="price-card"><div class="price-name">IT Audit</div><div class="price-amount">₹10,000<span> one-time</span></div><div class="price-desc">Full technology assessment for your business</div><ul class="price-features"><li>Complete Tech Audit</li><li>Security Assessment</li><li>Recommendations Report</li><li>1 Strategy Call Included</li></ul><button class="price-btn" onclick="showPage('booking')">Get Started</button></div>
+      <div class="price-card featured"><div class="price-badge">Popular</div><div class="price-name">Cloud Setup</div><div class="price-amount">₹15,000<span> one-time</span></div><div class="price-desc">Complete cloud migration and setup</div><ul class="price-features"><li>Cloud Strategy Planning</li><li>AWS / Google Workspace</li><li>Data Migration</li><li>Team Training</li><li>30 Days Support</li></ul><button class="price-btn" onclick="showPage('booking')">Get Started</button></div>
+      <div class="price-card"><div class="price-name">Monthly IT Support</div><div class="price-amount">₹8,000<span>/month</span></div><div class="price-desc">Ongoing IT support for your business</div><ul class="price-features"><li>Remote IT Support</li><li>System Monitoring</li><li>Security Updates</li><li>Monthly IT Report</li><li>Priority Response</li></ul><button class="price-btn" onclick="showPage('booking')">Get Started</button></div>
+    </div>
+    <p style="text-align:center;color:var(--muted);font-size:.85rem;margin-top:2rem">* Custom packages available. <a onclick="showPage('contact')" style="color:var(--accent2);cursor:pointer">Contact us</a> for tailored pricing.</p>
+  </section>
+</div>
+
+<!-- ABOUT -->
+<div class="page" id="page-about">
+  <section>
+    <p class="sec-tag">About Webnocks</p>
+    <h2>Who We Are</h2>
+    <div class="founder-wrap">
+      <div>
+        <div class="founder-avatar">👨‍💼<div class="founder-badge"><h4>Abhijeet Singh Kushwaha</h4><p>Founder & CEO, Webnocks</p></div></div>
+      </div>
+      <div>
+        <h2 style="margin-bottom:1rem">Meet Our Founder</h2>
+        <p>Hi, I'm <strong style="color:var(--text)">Abhijeet Singh Kushwaha</strong>, founder of Webnocks. With 2+ years of hands-on experience in IT consulting and digital marketing, I started Webnocks with one mission — to help Indian businesses compete and win online.</p>
+        <p>We are not just another agency. We are your digital growth partners. Every strategy is data-driven, every result is measurable, and every client relationship is built for the long term.</p>
+        <div class="contact-row"><div class="contact-icon">📞</div><a href="tel:+917068252052">+91 7068252052</a></div>
+        <div class="contact-row"><div class="contact-icon">✉️</div><a href="mailto:admin@webnocks.work">admin@webnocks.work</a></div>
+        <div class="contact-row"><div class="contact-icon">📍</div><span>India — Remote & On-site Services</span></div>
+        <div style="margin-top:1.5rem">
+          <span class="skill-pill">SEO Expert</span><span class="skill-pill">IT Consultant</span><span class="skill-pill">Web Developer</span><span class="skill-pill">Digital Strategist</span><span class="skill-pill">Cloud Solutions</span><span class="skill-pill">Google Ads</span><span class="skill-pill">Cybersecurity</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <p class="sec-tag">Achievements</p>
+    <h2>What We've Built</h2>
+    <div class="grid3">
+      <div class="svc-card" style="cursor:default"><span class="svc-icon">🏆</span><h3>150+ Projects Delivered</h3><p>Successfully delivered 150+ digital projects — websites, SEO campaigns, and IT consulting across India.</p></div>
+      <div class="svc-card" style="cursor:default"><span class="svc-icon">📈</span><h3>3x Average Traffic Growth</h3><p>Our SEO clients see an average of 3x increase in organic website traffic within 6 months of working with us.</p></div>
+      <div class="svc-card" style="cursor:default"><span class="svc-icon">⭐</span><h3>98% Client Retention</h3><p>Our clients stay with us because we deliver results. 98% of our clients renew their contracts every year.</p></div>
+      <div class="svc-card" style="cursor:default"><span class="svc-icon">💰</span><h3>40% Cost Reduction</h3><p>Our IT consulting clients save an average of 40% on operational technology costs after our recommendations.</p></div>
+      <div class="svc-card" style="cursor:default"><span class="svc-icon">🌍</span><h3>Pan-India Presence</h3><p>Serving clients from Delhi, Noida, Mumbai, Bangalore, and across India — both remote and on-site.</p></div>
+      <div class="svc-card" style="cursor:default"><span class="svc-icon">🚀</span><h3>2+ Years of Excellence</h3><p>2+ years of delivering cutting-edge digital solutions with passionate experts in SEO, tech, and design.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <p class="sec-tag">FAQ</p>
+    <h2>Frequently Asked Questions</h2>
+    <p class="sec-sub">Got questions? We've got answers.</p>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">How long does SEO take to show results?<span class="faq-icon">+</span></div><div class="faq-a"><p>SEO is a long-term strategy. Initial improvements are visible within 2-3 months, with significant results typically in 4-6 months. We provide monthly reports so you can track progress throughout.</p></div></div>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Do you provide a contract or guarantee?<span class="faq-icon">+</span></div><div class="faq-a"><p>Yes, we provide a signed agreement for every project. We guarantee our process, effort, and transparency. Most clients see measurable improvement within 90 days.</p></div></div>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">How much does a website cost?<span class="faq-icon">+</span></div><div class="faq-a"><p>Our websites start at ₹5,000 for a landing page and go up to ₹25,000+ for advanced websites. The exact cost depends on your requirements. Book a free call for an exact quote.</p></div></div>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Can you help my local business rank in my city?<span class="faq-icon">+</span></div><div class="faq-a"><p>Absolutely! Local SEO is one of our specialties. We optimize your Google My Business profile, build local citations, and create location-specific content to dominate local search results.</p></div></div>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Do you work with startups or only established businesses?<span class="faq-icon">+</span></div><div class="faq-a"><p>We work with everyone — from day-1 startups to established companies. We have affordable packages for every budget and scale our services based on your growth stage.</p></div></div>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">How do I get started?<span class="faq-icon">+</span></div><div class="faq-a"><p>Simply book a free 30-minute consultation call. We'll understand your goals, assess your current situation, and recommend the best strategy — completely free, no commitment required.</p></div></div>
+  </section>
+</div>
+
+<!-- BOOKING -->
+<div class="page" id="page-booking">
+  <section>
+    <div class="booking-wrap">
+      <div>
+        <p class="sec-tag">Book a Meeting</p>
+        <h2>Schedule Your Free Consultation</h2>
+        <p style="color:var(--muted);font-size:.92rem;margin-bottom:2rem">Talk directly with Abhijeet Singh Kushwaha. Get expert advice on SEO, web development, or IT consulting — completely free, no pressure.</p>
+        <div class="bf-item"><div class="bf-icon">📞</div><div><h4>30-Minute Strategy Call</h4><p>Deep dive into your business goals and challenges</p></div></div>
+        <div class="bf-item"><div class="bf-icon">🎯</div><div><h4>Custom Action Plan</h4><p>Walk away with a clear roadmap for your business</p></div></div>
+        <div class="bf-item"><div class="bf-icon">🆓</div><div><h4>100% Free, No Obligation</h4><p>No pressure, no sales pitch — just real advice</p></div></div>
+        <div class="bf-item"><div class="bf-icon">⚡</div><div><h4>Available 24/7</h4><p>Book any 30-min slot — any day, any time</p></div></div>
+        <div class="bf-item"><div class="bf-icon">📲</div><div><h4>WhatsApp Confirmation</h4><p>Get instant confirmation on WhatsApp within 30 mins</p></div></div>
+      </div>
+      <div class="booking-form">
+        <div class="form-title">📅 Book Your Free Call</div>
+        <div class="form-row">
+          <div class="form-group"><label>Your Name *</label><input type="text" id="bName" placeholder="Full name"/></div>
+          <div class="form-group"><label>WhatsApp Number *</label><input type="tel" id="bPhone" placeholder="+91 XXXXX XXXXX"/></div>
+        </div>
+        <div class="form-group"><label>Email Address *</label><input type="email" id="bEmail" placeholder="your@email.com"/></div>
+        <div class="form-group"><label>Service You Need *</label>
+          <select id="bService">
+            <option value="">Select a service...</option>
+            <option>SEO Services</option><option>Web Development</option><option>IT Consulting</option>
+            <option>Google Ads / PPC</option><option>Social Media Marketing</option>
+            <option>Cloud Setup</option><option>IT Support & Security</option>
+            <option>Multiple Services</option><option>Not Sure — Need Advice</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Select Date *</label><input type="date" id="bDate" onchange="generateSlots()"/></div>
+        <div class="form-group">
+          <label>Select Time Slot (30 min) *</label>
+          <div class="slots-grid" id="slotsGrid"><p style="color:var(--muted);font-size:.8rem;grid-column:1/-1;padding:.5rem 0">Please select a date first</p></div>
+        </div>
+        <div class="form-group"><label>About Your Business</label><textarea id="bMsg" rows="3" placeholder="Brief description of your business and what you need help with..."></textarea></div>
+        <button class="submit-btn" onclick="submitBooking()">✅ Confirm Free Booking →</button>
+        <p style="text-align:center;color:var(--muted);font-size:.75rem;margin-top:.8rem">WhatsApp/email confirmation within 30 minutes</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- CONTACT -->
+<div class="page" id="page-contact">
+  <section>
+    <p class="sec-tag">Get In Touch</p>
+    <h2>Contact Webnocks</h2>
+    <p class="sec-sub">Have a question? Ready to start? Reach out and we'll get back within a few hours.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start">
+      <div style="display:flex;flex-direction:column;gap:1.2rem">
+        <div class="svc-card" style="cursor:default"><span style="font-size:1.5rem">📞</span><h3 style="margin-top:.5rem">Call / WhatsApp</h3><p><a href="tel:+917068252052" style="color:var(--accent2);text-decoration:none;font-size:1.1rem">+91 7068252052</a></p><p style="font-size:.8rem">Available 24/7 on WhatsApp</p></div>
+        <div class="svc-card" style="cursor:default"><span style="font-size:1.5rem">✉️</span><h3 style="margin-top:.5rem">Email Us</h3><p><a href="mailto:admin@webnocks.work" style="color:var(--accent2);text-decoration:none">admin@webnocks.work</a></p><p style="font-size:.8rem">Response within 2-4 hours</p></div>
+        <div class="svc-card" style="cursor:default"><span style="font-size:1.5rem">🌐</span><h3 style="margin-top:.5rem">Website</h3><p style="color:var(--accent2)">webnocks.work</p><p style="font-size:.8rem">India — Remote & On-site services available</p></div>
+      </div>
+      <div class="booking-form">
+        <div class="form-title">💬 Send Us a Message</div>
+        <div class="form-group"><label>Your Name *</label><input type="text" id="cName" placeholder="Your full name"/></div>
+        <div class="form-group"><label>Email / WhatsApp *</label><input type="text" id="cContact" placeholder="Email or WhatsApp number"/></div>
+        <div class="form-group"><label>Subject</label>
+          <select id="cSubject">
+            <option>General Inquiry</option><option>SEO Services</option><option>Web Development</option>
+            <option>IT Consulting</option><option>Pricing Question</option><option>Partnership</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Message *</label><textarea id="cMsg" rows="5" placeholder="Tell us how we can help you..."></textarea></div>
+        <button class="submit-btn" onclick="submitContact()">Send Message →</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- PRIVACY -->
+<div class="page" id="page-privacy">
+  <div class="legal-page">
+    <h1>Privacy Policy</h1>
+    <p class="date">Last updated: May 2025</p>
+    <p>Webnocks operates the website webnocks.work. This page informs you of our policies regarding the collection, use, and disclosure of personal data when you use our services.</p>
+    <h3>Information We Collect</h3>
+    <p>We collect information you provide directly — including name, email, phone number, and business details when you fill out forms or book consultations on our website.</p>
+    <h3>How We Use Your Information</h3>
+    <ul><li>To respond to inquiries and provide customer support</li><li>To schedule and conduct consultations</li><li>To send service-related communications</li><li>To improve our website and services</li></ul>
+    <h3>Data Security</h3>
+    <p>We implement appropriate security measures to protect your personal information. Your data is never sold to third parties.</p>
+    <h3>Contact Us</h3>
+    <p>For privacy-related questions: admin@webnocks.work or +91 7068252052.</p>
+  </div>
+</div>
+
+<!-- TERMS -->
+<div class="page" id="page-terms">
+  <div class="legal-page">
+    <h1>Terms & Conditions</h1>
+    <p class="date">Last updated: May 2025</p>
+    <p>By using Webnocks website and services, you agree to these Terms and Conditions.</p>
+    <h3>Payment Terms</h3>
+    <ul><li>50% advance payment required before project commencement</li><li>Remaining payment due upon project completion</li><li>Monthly retainer services billed at the start of each month</li><li>All prices are in Indian Rupees (INR)</li></ul>
+    <h3>Refund Policy</h3>
+    <p>Advance payments are non-refundable once work has commenced. If we fail to deliver agreed services, a full refund will be provided.</p>
+    <h3>Intellectual Property</h3>
+    <p>Upon full payment, clients own all deliverables. Webnocks retains the right to showcase completed work in our portfolio.</p>
+    <h3>Contact</h3>
+    <p>Questions: admin@webnocks.work</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer-wrap">
+  <div class="footer-grid">
+    <div>
+      <span class="logo-text" style="display:block;margin-bottom:.8rem">webnocks<span style="color:var(--green)">.work</span></span>
+      <p style="color:var(--muted);font-size:.83rem;line-height:1.7;max-width:260px">Your trusted digital growth partner. IT Consulting, SEO, and Web Development to help your business rank higher and grow faster.</p>
+      <div style="margin-top:1rem;display:flex;gap:.8rem">
+        <a href="https://wa.me/917068252052" target="_blank" style="background:rgba(37,211,102,.1);border:1px solid rgba(37,211,102,.2);color:#25D366;padding:.4rem .8rem;border-radius:6px;font-size:.75rem;text-decoration:none">WhatsApp</a>
+        <a href="mailto:admin@webnocks.work" style="background:rgba(79,142,247,.1);border:1px solid rgba(79,142,247,.2);color:var(--accent2);padding:.4rem .8rem;border-radius:6px;font-size:.75rem;text-decoration:none">Email Us</a>
+      </div>
+    </div>
+    <div class="footer-col"><h4>Services</h4><ul><li><a onclick="showPage('services')">SEO Services</a></li><li><a onclick="showPage('services')">Web Development</a></li><li><a onclick="showPage('services')">IT Consulting</a></li><li><a onclick="showPage('services')">Google Ads</a></li><li><a onclick="showPage('services')">Social Media</a></li></ul></div>
+    <div class="footer-col"><h4>Company</h4><ul><li><a onclick="showPage('about')">About Us</a></li><li><a onclick="showPage('pricing')">Pricing</a></li><li><a onclick="showPage('booking')">Book a Call</a></li><li><a onclick="showPage('contact')">Contact</a></li></ul></div>
+    <div class="footer-col"><h4>Legal</h4><ul><li><a onclick="showPage('privacy')">Privacy Policy</a></li><li><a onclick="showPage('terms')">Terms & Conditions</a></li></ul><h4 style="margin-top:1.5rem">Contact</h4><ul><li><a href="tel:+917068252052">+91 7068252052</a></li><li><a href="mailto:admin@webnocks.work">admin@webnocks.work</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Webnocks. All rights reserved. | Founder: Abhijeet Singh Kushwaha</p>
+    <p>Made with ❤️ in India 🇮🇳</p>
+  </div>
+</div>
+
+<!-- WHATSAPP BUTTON -->
+<a class="wa-btn" href="https://wa.me/917068252052?text=Hi%20Webnocks!%20I%20am%20interested%20in%20your%20services." target="_blank" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="successModal">
+  <div class="modal">
+    <div class="modal-icon">🎉</div>
+    <h3 id="modalTitle">Done!</h3>
+    <p id="modalMsg">We'll get back to you shortly.</p>
+    <button class="modal-close" onclick="document.getElementById('successModal').classList.remove('show')">Done</button>
+  </div>
+</div>
+
+<script>
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  const navEl = document.getElementById('nav-' + page);
+  if (navEl) navEl.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function go(page) { showPage(page); toggleMenu(); }
+function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('open'); }
+function toggleFaq(el) {
+  const item = el.parentElement;
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+function generateSlots() {
+  const grid = document.getElementById('slotsGrid');
+  grid.innerHTML = '';
+  for (let h = 0; h < 24; h++) {
+    ['00','30'].forEach(m => {
+      const slot = document.createElement('div');
+      slot.className = 'slot';
+      slot.textContent = String(h).padStart(2,'0') + ':' + m;
+      slot.onclick = function() {
+        document.querySelectorAll('.slot').forEach(s => s.classList.remove('selected'));
+        this.classList.add('selected');
+      };
+      grid.appendChild(slot);
+    });
+  }
+}
+function showModal(title, msg) {
+  document.getElementById('modalTitle').textContent = title;
+  document.getElementById('modalMsg').textContent = msg;
+  document.getElementById('successModal').classList.add('show');
+}
+function submitBooking() {
+  const name = document.getElementById('bName').value.trim();
+  const phone = document.getElementById('bPhone').value.trim();
+  const email = document.getElementById('bEmail').value.trim();
+  const service = document.getElementById('bService').value;
+  const date = document.getElementById('bDate').value;
+  const selected = document.querySelector('.slot.selected');
+  if (!name||!phone||!email||!service||!date||!selected) { alert('Please fill all required fields and select a time slot.'); return; }
+  const msg = `New Booking!\nName: ${name}\nPhone: ${phone}\nEmail: ${email}\nService: ${service}\nDate: ${date}\nTime: ${selected.textContent}`;
+  window.open(`https://wa.me/917068252052?text=${encodeURIComponent(msg)}`, '_blank');
+  showModal('Booking Confirmed! 🎉', `Thank you ${name}! Your call is scheduled for ${date} at ${selected.textContent}. WhatsApp confirmation coming shortly!`);
+}
+function submitContact() {
+  const name = document.getElementById('cName').value.trim();
+  const contact = document.getElementById('cContact').value.trim();
+  const msg = document.getElementById('cMsg').value.trim();
+  if (!name||!contact||!msg) { alert('Please fill all required fields.'); return; }
+  const waMsg = `Message from Website!\nName: ${name}\nContact: ${contact}\nMessage: ${msg}`;
+  window.open(`https://wa.me/917068252052?text=${encodeURIComponent(waMsg)}`, '_blank');
+  showModal('Message Sent! ✅', `Thank you ${name}! We've received your message and will respond within 2-4 hours.`);
+}
+function submitAudit() {
+  const name = document.getElementById('auditName').value.trim();
+  const url = document.getElementById('auditUrl').value.trim();
+  const email = document.getElementById('auditEmail').value.trim();
+  if (!name||!url||!email) { alert('Please fill all fields.'); return; }
+  const waMsg = `FREE SEO AUDIT REQUEST!\nName: ${name}\nWebsite: ${url}\nEmail: ${email}`;
+  window.open(`https://wa.me/917068252052?text=${encodeURIComponent(waMsg)}`, '_blank');
+  showModal('Audit Request Sent! 🚀', `We'll analyze ${url} and send your free SEO audit report within 24-48 hours to ${email}.`);
+}
+window.addEventListener('DOMContentLoaded', function() {
+  const today = new Date().toISOString().split('T')[0];
+  const d = document.getElementById('bDate');
+  if (d) d.min = today;
+});
+</script>
+</body>
+</html>
