@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operation Baaz - Admin Console</title>
+    <!-- Firebase Legacy SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+    <style>
+        :root {
+            --bg: #090d16;
+            --surface: #111a2e;
+            --accent: #f59e0b;
+            --accent-hover: #d97706;
+            --success: #10b981;
+            --text: #f1f5f9;
+            --muted: #64748b;
+            --border: #1e293b;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', sans-serif; }
+        body { background: var(--bg); color: var(--text); padding: 15px; min-height: 100vh; }
+        .container { max-width: 900px; margin: 0 auto; }
+        .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 20px; }
+        h1, h2, h3 { margin-bottom: 15px; color: #fff; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 6px; font-size: 0.85rem; color: var(--muted); text-transform: uppercase; }
+        input, select, textarea { width: 100%; padding: 12px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; color: #fff; outline: none; }
+        .btn { width: 100%; padding: 12px; border: none; border-radius: 8px; background: var(--accent); color: #000; font-weight: bold; font-size: 1rem; cursor: pointer; transition: 0.2s; }
+        .btn:hover { background: var(--accent-hover); }
+        .btn-sec { background: transparent; border: 1px solid var(--border); color: var(--text); }
+        .screen { display: none; }
+        .screen.active { display: block; }
+        .flex-between { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .q-box { background: rgba(0,0,0,0.2); border: 1px dashed var(--border); border-radius: 8px; padding: 15px; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- ADMIN LOGIN SCREEN -->
+        <div id="adm-login" class="screen active">
+            <div class="card" style="max-width: 450px; margin: 60px auto;">
+                <h2>Operation Baaz Admin</h2>
+                <p style="color: var(--muted); margin-bottom: 15px;">Access command controls</p>
+                <div class="form-group">
+                    <label>Admin Email</label>
+                    <input type="email" id="admin-email" placeholder="admin@webnocks.work">
+                </div>
+                <div class="form-group">
+                    <label>Security Password</label>
+                    <input type="password" id="admin-pass" placeholder="••••••••">
+                </div>
+                <button class="btn" onclick="handleAdminLogin()">Authorize Control Panel</button>
+            </div>
+        </div>
+
+        <!-- ADMIN CONTROL DASHBOARD -->
+        <div id="adm-dashboard" class="screen">
+            <div class="card flex-between">
+                <div>
+                    <h2>Command Center Dashboard</h2>
+                    <p style="margin:0;">Deploy and manage active mock question structures.</p>
+                </div>
+                <button class="btn btn-sec" style="width:auto; padding:10px 20px;" onclick="adminLogout()">Exit Panel</button>
+            </div>
+
+            <!-- CREATE MOCK TEST SYSTEM -->
+            <div class="card">
+                <h3>Step A: Setup New Mock Configurations</h3>
+                <div class="form-group">
+                    <label>Mock Test Title</label>
+                    <input type="text" id="mock-title" placeholder="AFCAT Full Length Mock 01">
+                </div>
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label>Subject Category</label>
+                        <input type="text" id="mock-subject" placeholder="Reasoning / Full Length">
+                    </div>
+                    <div class="form-group">
+                        <label>Timer Duration (Minutes)</label>
+                        <input type="number" id="mock-timer" value="120">
+                    </div>
+                </div>
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label>Positive Marks per Question</label>
+                        <input type="number" id="mock-pos" value="3">
+                    </div>
+                    <div class="form-group">
+                        <label>Negative Marks (Put 0 if none)</label>
+                        <input type="number" id="mock-neg" value="1" step="0.25">
+                    </div>
+                </div>
+                <button class="btn" onclick="saveMockConfig()">Create & Lock Mock Paper</button>
+            </div>
+
+            <!-- ADD QUESTIONS TO ACTIVE MOCK -->
+            <div class="card" id="question-builder-box" style="display: none;">
+                <div class="flex-between">
+                    <h3>Step B: Add Questions to [<span id="active-mock-display" style="color:var(--accent);">None</span>]</h3>
+                    <span id="q-count-badge" style="background:var(--border); padding:5px 10px; border-radius:20px; font-size:0.8rem;">0 Saved</span>
+                </div>
+                <p style="margin-top: 5px;">Manually inject text question structures below:</p>
+
+                <div class="q-box">
+                    <div class="form-group">
+                        <label>Question Prompt text</label>
+                        <textarea id="q-text" rows="3" placeholder="What is the capital of India?"></textarea>
+                    </div>
+                    <div class="grid-2">
+                        <div class="form-group"><label>Option A</label><input type="text" id="opt-0"></div>
+                        <div class="form-group"><label>Option B</label><input type="text" id="opt-1"></div>
+                    </div>
+                    <div class="grid-2">
+                        <div class="form-group"><label>Option C</label><input type="text" id="opt-2"></div>
+                        <div class="form-group"><label>Option D</label><input type="text" id="opt-3"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Correct Choice Option Index</label>
+                        <select id="q-correct">
+                            <option value="0">Option A</option>
+                            <option value="1">Option B</option>
+                            <option value="2">Option C</option>
+                            <option value="3">Option D</option>
+                        </select>
+                    </div>
+                    <button class="btn" style="background: var(--success); color: white;" onclick="addQuestionToCloud()">Push Question to Live Database</button>
+                </div>
+                <button class="btn btn-sec" onclick="finishMockCompilation()">Complete Test Setup Session</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // CONFIG SECURED LINK WITH USER PLATFORM ACCOUNT VALUES
+        const firebaseConfig = {
+            apiKey: "AIzaSyB0eLSNjBXkjMgtqe3jgOdhNVTu8F0x_14",
+            authDomain: "operation-baaz.firebaseapp.com",
+            projectId: "operation-baaz",
+            storageBucket: "operation-baaz.firebasestorage.app",
+            messagingSenderId: "229131380430",
+            appId: "1:229131380430:web:6bfd5074729faf73af929f",
+            measurementId: "G-EP5YRKFY1P"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        let activeCreatedMockId = null;
+        let savedQuestionsCount = 0;
+
+        function showAdminScreen(scrId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(scrId).classList.add('active');
+        }
+
+        function handleAdminLogin() {
+            const email = document.getElementById('admin-email').value.trim();
+            const pass = document.getElementById('admin-pass').value;
+
+            if(!email || !pass) return alert('Enter credentials matrix setup!');
+
+            auth.signInWithEmailAndPassword(email, pass)
+                .then(res => {
+                    showAdminScreen('adm-dashboard');
+                })
+                .catch(err => alert("Authorization Failed: " + err.message));
+        }
+
+        function adminLogout() {
+            auth.signOut().then(() => showAdminScreen('adm-login'));
+        }
+
+        function saveMockConfig() {
+            const title = document.getElementById('mock-title').value.trim();
+            const subject = document.getElementById('mock-subject').value.trim();
+            const timer = document.getElementById('mock-timer').value;
+            const pos = document.getElementById('mock-pos').value;
+            const neg = document.getElementById('mock-neg').value;
+
+            if(!title || !subject || !timer) return alert("Fill config schemas completely!");
+
+            db.collection('mocks').add({
+                title: title,
+                subject: subject,
+                timer: timer,
+                posMark: pos,
+                negMark: neg,
+                status: 'active',
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            }).then(docRef => {
+                activeCreatedMockId = docRef.id;
+                savedQuestionsCount = 0;
+                document.getElementById('active-mock-display').innerText = title;
+                document.getElementById('q-count-badge').innerText = "0 Saved";
+                document.getElementById('question-builder-box').style.display = "block";
+                alert('Configuration locked! Now insert your questions block system structures below.');
+            }).catch(err => alert(err.message));
+        }
+
+        function addQuestionToCloud() {
+            if(!activeCreatedMockId) return alert('No loaded configuration available.');
+            
+            const qText = document.getElementById('q-text').value.trim();
+            const oA = document.getElementById('opt-0').value.trim();
+            const oB = document.getElementById('opt-1').value.trim();
+            const oC = document.getElementById('opt-2').value.trim();
+            const oD = document.getElementById('opt-3').value.trim();
+            const correctIdx = document.getElementById('q-correct').value;
+
+            if(!qText || !oA || !oB || !oC || !oD) return alert('Fill complete options sets mapping structure fields!');
+
+            db.collection('questions').add({
+                mockId: activeCreatedMockId,
+                text: qText,
+                options: [oA, oB, oC, oD],
+                correct: parseInt(correctIdx)
+            }).then(() => {
+                savedQuestionsCount++;
+                document.getElementById('q-count-badge').innerText = `${savedQuestionsCount} Saved`;
+                
+                // Reset Fields
+                document.getElementById('q-text').value = "";
+                document.getElementById('opt-0').value = "";
+                document.getElementById('opt-1').value = "";
+                document.getElementById('opt-2').value = "";
+                document.getElementById('opt-3').value = "";
+                alert('Question pushed successfully!');
+            }).catch(err => alert(err.message));
+        }
+
+        function finishMockCompilation() {
+            alert('Deployment session completed. Test is now active on Student Dashboard!');
+            document.getElementById('question-builder-box').style.display = "none";
+            document.getElementById('mock-title').value = "";
+        }
+    </script>
+</body>
+</html>
